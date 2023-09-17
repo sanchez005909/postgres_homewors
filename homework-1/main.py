@@ -9,6 +9,7 @@ orders_data = os.path.join('north_data', 'orders_data.csv')
 
 conn = psycopg2.connect(host='localhost', database='north', user='postgres', password='12345678')
 
+
 def writing_data_to_table(filename, table_name):
     with open(filename) as f:
         reader = csv.reader(f)
@@ -16,6 +17,7 @@ def writing_data_to_table(filename, table_name):
         for row in reader:
             quantity_el = '%s, ' * len(row)
             cur.execute(f"INSERT INTO {table_name} VALUES({quantity_el[:-2]})", (row[::]))
+
 
 try:
     with conn:
@@ -27,6 +29,3 @@ try:
             writing_data_to_table(orders_data, 'orders')
 finally:
     conn.close()
-
-
-
